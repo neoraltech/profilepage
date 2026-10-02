@@ -1,0 +1,6 @@
+# Playwright/browser test artefacts
+.playwright-mcp/
+
+# OS cruft
+.DS_Store
+Thumbs.db

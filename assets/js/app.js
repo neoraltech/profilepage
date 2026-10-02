@@ -110,7 +110,7 @@
         mine.forEach(function (p) {
           var b = el("button", "job-link", p.name);
           b.type = "button";
-          b.addEventListener("click", function () { jumpToProject(p.name); });
+          b.addEventListener("click", function () { jumpToProject(p); });
           list.appendChild(b);
         });
         node.appendChild(list);
@@ -122,8 +122,11 @@
 
   /* ----------------------------------------------------------- Projects */
 
-  var activeFilter = "All";
-  var filterCounts = {};
+  /* label -> filter kind. Authoritative in JS; the DOM is only a projection. */
+  var filterKinds = {};
+  /* Parallel to PROJECTS: { project, el, tags }. Avoids recovering state from data-*. */
+  var cardIndex = [];
+  var filterButtons = [];
 
   function buildFilters() {
     var sectors = {};
@@ -154,47 +157,42 @@
     });
 
     var box = $("#filters");
+    filterButtons = [];
     defs.forEach(function (d) {
-      filterCounts[d.label] = d.count;
+      filterKinds[d.label] = d.kind;
       var b = el("button", "filter");
       b.type = "button";
-      b.dataset.kind = d.kind;
-      b.dataset.label = d.label;
       b.setAttribute("aria-pressed", d.label === "All" ? "true" : "false");
       b.appendChild(document.createTextNode(d.label));
       b.appendChild(el("span", "n", String(d.count)));
       b.addEventListener("click", function () { applyFilter(d.label); });
       box.appendChild(b);
+      filterButtons.push({ label: d.label, el: b });
     });
   }
 
   function matches(project, label) {
-    var btn = $('.filter[data-label="' + cssEscape(label) + '"]');
-    var kind = btn ? btn.dataset.kind : "all";
+    var kind = filterKinds[label] || "all";
     if (kind === "all") return true;
     if (kind === "featured") return !!project.featured;
     if (kind === "sector") return project.sector === label;
     return project.tech.indexOf(label) !== -1;
   }
 
-  function cssEscape(s) { return s.replace(/["\\]/g, "\\$&"); }
-
   function applyFilter(label) {
-    activeFilter = label;
 
-    Array.prototype.forEach.call(document.querySelectorAll(".filter"), function (b) {
-      b.setAttribute("aria-pressed", b.dataset.label === label ? "true" : "false");
+    filterButtons.forEach(function (f) {
+      f.el.setAttribute("aria-pressed", f.label === label ? "true" : "false");
     });
 
     var shown = 0;
-    Array.prototype.forEach.call(document.querySelectorAll(".card"), function (card) {
-      var p = PROJECTS[Number(card.dataset.index)];
-      var ok = matches(p, label);
-      card.hidden = !ok;
+    cardIndex.forEach(function (entry) {
+      var ok = matches(entry.project, label);
+      entry.el.hidden = !ok;
       if (ok) shown++;
 
-      Array.prototype.forEach.call(card.querySelectorAll(".tag"), function (tag) {
-        tag.classList.toggle("is-match", label !== "All" && tag.textContent === label);
+      entry.tags.forEach(function (t) {
+        t.el.classList.toggle("is-match", label !== "All" && t.name === label);
       });
     });
 
@@ -210,9 +208,6 @@
 
     PROJECTS.forEach(function (p, idx) {
       var card = el("article", "card");
-      card.dataset.index = String(idx);
-      card.dataset.name = p.name;
-
       var bodyId = "proj-body-" + idx;
 
       var btn = el("button", "card-btn");
@@ -253,7 +248,12 @@
       btn.appendChild(el("p", "summary", p.summary));
 
       var tags = el("div", "tags");
-      p.tech.forEach(function (t) { tags.appendChild(el("span", "tag", t)); });
+      var tagRefs = [];
+      p.tech.forEach(function (t) {
+        var node = el("span", "tag", t);
+        tags.appendChild(node);
+        tagRefs.push({ name: t, el: node });
+      });
       btn.appendChild(tags);
 
       card.appendChild(btn);
@@ -287,6 +287,7 @@
       });
 
       wrap.appendChild(card);
+      cardIndex.push({ project: p, el: card, btn: btn, tags: tagRefs });
     });
 
     var empty = el("p", "empty", "No projects match that filter.");
@@ -295,14 +296,13 @@
     wrap.appendChild(empty);
   }
 
-  function jumpToProject(name) {
+  function jumpToProject(project) {
     applyFilter("All");
-    var card = document.querySelector('.card[data-name="' + cssEscape(name) + '"]');
-    if (!card) return;
-    if (!card.classList.contains("is-open")) {
-      card.querySelector(".card-btn").click();
-    }
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    var entry = null;
+    cardIndex.forEach(function (c) { if (c.project === project) entry = c; });
+    if (!entry) return;
+    if (!entry.el.classList.contains("is-open")) entry.btn.click();
+    entry.el.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   /* ------------------------------------------------------------- Skills */
@@ -354,23 +354,23 @@
     ["contact", "Contact"]
   ];
 
+  /* section id -> nav anchor, populated at render time. */
+  var navLinks = {};
+
   function renderNav() {
     var nav = $("#nav");
     SECTIONS.forEach(function (s) {
       var a = document.createElement("a");
       a.href = "#" + s[0];
-      a.dataset.target = s[0];
       a.appendChild(el("span", "bar"));
       a.appendChild(document.createTextNode(s[1]));
       nav.appendChild(a);
+      navLinks[s[0]] = a;
     });
   }
 
   function scrollSpy() {
-    var links = {};
-    Array.prototype.forEach.call(document.querySelectorAll(".nav a"), function (a) {
-      links[a.dataset.target] = a;
-    });
+    var links = navLinks;
 
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {

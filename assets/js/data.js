@@ -115,7 +115,7 @@ const PROJECTS = [
       "Leveraged modern cloud and integration technologies to reduce technical debt.",
       "Passed penetration testing on first assessment with no critical findings."
     ],
-    tech: ["OutSystems", "Reactive Web", "REST APIs", "Cloud Integration", "Security"]
+    tech: ["OutSystems O11", "Reactive Web", "REST APIs", "Cloud Integration", "Security"]
   },
   {
     name: "TLANZ - WebForms2",
@@ -156,7 +156,7 @@ const PROJECTS = [
       "Used Discovery and AI Mentor to reduce technical debt.",
       "Passed penetration testing with no critical findings and only minimal medium-level issues."
     ],
-    tech: ["OutSystems", "AI Mentor", "AWS", "Microsoft Graph", "NZTA", "Cloudmersive", "POLiPay", "Windcave", "SendGrid"]
+    tech: ["OutSystems O11", "AI Mentor", "AWS", "Microsoft Graph", "NZTA", "Cloudmersive", "POLiPay", "Windcave", "SendGrid"]
   },
   {
     name: "QCS - Connect",
@@ -176,7 +176,7 @@ const PROJECTS = [
       "Introduced secure yet straightforward logic implementations to enhance security.",
       "Led the platform and LifeTime upgrade effort for a smooth, seamless transition."
     ],
-    tech: ["OutSystems", "Caching", "SigWeb", "Mobile Plugins", "LifeTime", "Performance"],
+    tech: ["OutSystems O11", "Caching", "SigWeb", "Mobile Plugins", "LifeTime", "Performance"],
     metric: { from: "~6 hours", to: "under 10 min", label: "Batch processing time" }
   },
   {
@@ -197,7 +197,7 @@ const PROJECTS = [
       "Placed strong emphasis on code performance and reliability, avoiding timeouts and redundant data processing.",
       "Optimised existing processes and introduced initiatives that empowered the support team and fostered developer growth."
     ],
-    tech: ["OutSystems", "Traditional Web", "Performance", "Mentoring"]
+    tech: ["OutSystems O11", "Traditional Web", "Performance", "Mentoring"]
   },
   {
     name: "ESG - KPMG ESIMS",
@@ -217,7 +217,7 @@ const PROJECTS = [
       "Developed an ad-hoc tool to assist in investigating and resolving production issues.",
       "Became subject matter expert for APIs and Business Process Technologies (BPTs) within the project."
     ],
-    tech: ["OutSystems", "APIs", "BPT", "SIT", "Root Cause Analysis"]
+    tech: ["OutSystems O11", "APIs", "BPT", "SIT", "Root Cause Analysis"]
   },
   {
     name: "Manufacturing Execution System (MES)",
@@ -238,7 +238,7 @@ const PROJECTS = [
       "Created web services for SAP B1 integration via SOAP and custom OutSystems extensions in C#.NET to overcome platform limitations.",
       "Optimised the mobile app to improve operator user experience and provided ongoing MES support."
     ],
-    tech: ["OutSystems", "C#.NET", "SAP B1", "SOAP", "2FA", "Mobile", "Custom Extensions"]
+    tech: ["OutSystems O11", "C#.NET", "SAP B1", "SOAP", "2FA", "Mobile", "Custom Extensions"]
   },
   {
     name: "RFQ Application",
@@ -256,7 +256,7 @@ const PROJECTS = [
       "Enabled easy access to and updates of the company service information.",
       "Integrated the OutSystems application into WordPress using an iframe, providing a seamless way to manage public files and forms within the website."
     ],
-    tech: ["OutSystems", "WordPress", "File Management"]
+    tech: ["OutSystems O11", "WordPress", "File Management"]
   },
   {
     name: "GSIS Motor Vehicle Claims Processing",
@@ -279,7 +279,7 @@ const PROJECTS = [
       "Created a reusable module for SAP BAPI integration with publicly exposed server actions.",
       "Served as the last point of escalation for complex development issues."
     ],
-    tech: ["OutSystems", "Oracle", "SAP BAPI", "Mobile Security", "MOBSF", "Clean Architecture", "OTP / SMS"]
+    tech: ["OutSystems O11", "Oracle", "SAP BAPI", "Mobile Security", "MOBSF", "Clean Architecture", "OTP / SMS"]
   },
   {
     name: "Coke FEMSA Merchandiser Survey System",
@@ -299,7 +299,7 @@ const PROJECTS = [
       "Built user access control allowing on-demand modification of web and mobile access.",
       "Integrated Ciphered Local Storage for local data protection and implemented push notifications using In-App Notifications and Firebase."
     ],
-    tech: ["OutSystems", "Offline Sync", "Firebase", "Push Notifications", "Geolocation", "Mobile"]
+    tech: ["OutSystems O11", "Offline Sync", "Firebase", "Push Notifications", "Geolocation", "Mobile"]
   },
   {
     name: "Coke FEMSA Credit Application System",
@@ -316,7 +316,7 @@ const PROJECTS = [
     highlights: [
       "Integrated an Audit Trail feature to track and monitor record changes throughout the data flow."
     ],
-    tech: ["OutSystems", "Data Modelling", "Audit Trail", "UI/UX"]
+    tech: ["OutSystems O11", "Data Modelling", "Audit Trail", "UI/UX"]
   },
   {
     name: "Nissan Securities - Plasma, Web Admin, Console Hosts",
